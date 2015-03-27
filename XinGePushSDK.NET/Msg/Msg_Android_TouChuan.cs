@@ -26,8 +26,7 @@ namespace XinGePushSDK.NET
             }
             if (this.custom_content.Count>0)
             {
-                JArray array = new JArray(this.custom_content);
-                jobject.Add("custom_content", array);
+                jobject.Add("custom_content", JsonConvert.SerializeObject(this.custom_content));
             }
             return jobject.ToString();
             
