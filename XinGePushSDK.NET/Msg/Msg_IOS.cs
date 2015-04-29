@@ -11,32 +11,34 @@ namespace XinGePushSDK.NET
 
     public class Msg_IOS : Msg
     {
-        private string aps { get; set; }
+        private Payload aps { get; set; }
         public Msg_IOS(Payload playload)
             : base(0)
         {
-            aps = playload.ToJson();
+            aps = playload;
         }
 
         public Msg_IOS(Payload playload,IDictionary<string, string> msg):base(0)
         {
-            aps = playload.ToJson();
+            aps = playload;
         }
 
         public override string ToJson()
         {
-            JObject jobject = new JObject();
-            jobject.Add("aps", aps);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("aps",aps);
+
+             
             if (accept_time.Count > 0)
             {
                 JArray array = new JArray(this.accept_time);
-                jobject.Add("accept_time", array);
+                dic.Add("accept_time", array);
             }
             if (this.custom_content.Count > 0)
             {
-                jobject.Add("custom_content", JsonConvert.SerializeObject(this.custom_content));
+                dic.Add("custom_content", this.custom_content);
             }
-            return jobject.ToString();
+            return JsonConvert.SerializeObject(dic);
         }
     }
 }
